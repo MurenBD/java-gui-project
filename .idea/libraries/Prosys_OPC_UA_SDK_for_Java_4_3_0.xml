@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Prosys OPC UA SDK for Java 4.3.0">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../../../Java SDKs/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../java_sdks/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/lib" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$PROJECT_DIR$/../../../../../Java SDKs/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/javadoc/prosys-opc-ua-sdk-client-server-evaluation-4.3.0-1075-javadoc" />
+      <root url="file://$PROJECT_DIR$/../../../../../java_sdks/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/javadoc/prosys-opc-ua-sdk-client-server-evaluation-4.3.0-1075-javadoc" />
     </JAVADOC>
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/../../../../../Java SDKs/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../../../../java_sdks/prosys-opc-ua-sdk-for-java-4.3.0-1075-client-server-evaluation/lib" recursive="false" />
   </library>
 </component>
