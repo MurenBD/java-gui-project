@@ -7,57 +7,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <TabPane prefHeight="375.0" prefWidth="652.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="100.0" tabMinHeight="100.0">
@@ -66,20 +24,20 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <LineChart prefHeight="277.0" prefWidth="347.0" fx:id="xyChart">
+                              <LineChart fx:id="dbxyChart" prefHeight="277.0" prefWidth="347.0">
                                 <xAxis>
-                                  <CategoryAxis side="BOTTOM" />
+                                  <CategoryAxis fx:id="dbxAxis" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis side="LEFT" />
+                                  <NumberAxis fx:id="dbyAxis" side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <ListView layoutX="347.0" layoutY="14.0" prefHeight="200.0" prefWidth="183.0" fx:id="xyList" />
-                              <TextField layoutX="354.0" layoutY="227.0" prefHeight="25.0" prefWidth="42.0" fx:id="xTextField" />
-                              <TextField fx:id="yTextField" layoutX="414.0" layoutY="227.0" prefHeight="25.0" prefWidth="39.0" />
+                              <ListView fx:id="dbxyListView" layoutX="347.0" layoutY="14.0" prefHeight="200.0" prefWidth="183.0" />
+                              <TextField fx:id="dbxTextField" layoutX="354.0" layoutY="227.0" prefHeight="25.0" prefWidth="42.0" />
+                              <TextField fx:id="dbyTextField" layoutX="414.0" layoutY="227.0" prefHeight="25.0" prefWidth="39.0" />
                               <Label layoutX="347.0" layoutY="231.0" text="X" />
                               <Label layoutX="407.0" layoutY="231.0" text="Y" />
-                              <Button fx:id="coordButton" layoutX="470.0" layoutY="227.0" mnemonicParsing="false" text="Submit" />
+                              <Button fx:id="dbcoordButton" layoutX="470.0" layoutY="227.0" mnemonicParsing="false" onAction="#coordButtonClicked" text="Submit" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -89,6 +47,28 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
+                  <Tab text="Connection">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="cConnectionStatusTextField" editable="false" layoutX="140.0" layoutY="59.0" text="Not Connected" />
+                              <Label layoutX="35.0" layoutY="63.0" text="Connection Status" />
+                              <TextField fx:id="cAddressTextField" layoutX="138.0" layoutY="242.0" prefHeight="25.0" prefWidth="268.0" />
+                              <Label layoutX="55.0" layoutY="246.0" text="Enter Address" />
+                              <Button fx:id="cConnectButton" layoutX="242.0" layoutY="279.0" mnemonicParsing="false" text="Connect" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Node Monitoring">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TreeView layoutX="16.0" layoutY="17.0" prefHeight="341.0" prefWidth="512.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
               </tabs>
                <cursor>
                   <Cursor fx:constant="E_RESIZE" />
