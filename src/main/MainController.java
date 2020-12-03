@@ -78,14 +78,14 @@ public class MainController {
     @FXML
     public void connectButtonClicked(Event e){
         this.client = connectionManager.getClient();
-        client.setAddress(cAddressTextField.getText());
+       /* client.setAddress(cAddressTextField.getText());
         connectionManager.defaultAppInitialize();
         try {
             client.connect();
         } catch (ServiceException error) {
             System.out.println("Connection Failed"); //debug
             System.out.print(error);
-        }
+        }*/
     }
 
 }
