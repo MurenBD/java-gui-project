@@ -22,8 +22,8 @@ public class ClientConnectionManager{
     private void initialize(){
         client = new UaClient();
         applicationDescription = new ApplicationDescription();
-        identity = new ApplicationIdentity();
-        identity.setApplicationDescription(applicationDescription);
+       // identity = new ApplicationIdentity();
+       // identity.setApplicationDescription(applicationDescription);
     }
 
 
@@ -33,7 +33,7 @@ public class ClientConnectionManager{
         applicationDescription.setProductUri("urn:prosysopc.com:UA:TestJavaClient");
         applicationDescription.setApplicationType(ApplicationType.Client);
 
-        final ApplicationIdentity identity = new ApplicationIdentity();
+        //final ApplicationIdentity identity = new ApplicationIdentity();
         identity.setApplicationDescription(applicationDescription);
         client.setApplicationIdentity(identity);
         client.setValidateDiscoveredEndpoints(false);
