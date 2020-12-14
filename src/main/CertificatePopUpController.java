@@ -1,2 +1,4 @@
-package main;public class CertificatePopUpController {
+package main;
+
+public class CertificatePopUpController {
 }

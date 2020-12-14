@@ -2,6 +2,10 @@ package main;
 
 import com.prosysopc.ua.ServiceException;
 import com.prosysopc.ua.client.UaClient;
+import com.prosysopc.ua.stack.core.MessageSecurityMode;
+import com.prosysopc.ua.stack.transport.security.SecurityMode;
+import com.prosysopc.ua.stack.transport.security.SecurityPolicy;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +14,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import main.connector.ClientConnectionManager;
 
@@ -37,30 +38,47 @@ public class MainController {
     @FXML TextField cConnectionStatusTextField;
     @FXML TextField cAddressTextField;
     @FXML Button cConnectButton;
+    @FXML CheckBox cReverseConnectCheckBox;
+    @FXML ComboBox cSecurityPolicyComboBox;
+    @FXML ComboBox cMessageSecurityModeComboBox;
+    @FXML Button cCreateCertificateButton;
 
     public MainController(){
-        initialize();
+
     }
 
     public MainController(ClientConnectionManager client){
-        initialize();
+
     }
 
-    private void initialize(){
-        connectionManager = new ClientConnectionManager();
-        dbxAxis = new CategoryAxis();
-        dbyAxis = new NumberAxis();
+    public void initialize(){
+        //Dashboard
+        //dbxAxis = new CategoryAxis();
+        //dbyAxis = new NumberAxis();
         dataseries = new XYChart.Series<>();
-        dbxyChart = new LineChart<String, Number>(dbxAxis, dbyAxis);
+        //dbxyChart = new LineChart<String, Number>(dbxAxis, dbyAxis);
         dataseries.getData().add(new XYChart.Data<String, Number>("0", 0));
         dbxyChart.getData().add(dataseries);
-        //TextFormatter numberFormat = new TextFormatter();
-        //dbxTextField.setTextFormatter(numberFormat);
 
-        //init dbxyChart
-        //dbxAxis = new NumberAxis();
-         //dbxyChart = new LineChart(dbxAxis, dbyAxis);
-       // dataseries = new XYChart.Series();
+        //Connection
+        connectionManager = new ClientConnectionManager();
+        //cReverseConnectCheckBox = new CheckBox();
+        //cSecurityPolicyComboBox = new ComboBox();
+        //cMessageSecurityModeComboBox = new ComboBox();
+
+        cSecurityPolicyComboBox.getItems().add("None");
+        cSecurityPolicyComboBox.getItems().add("AES128");
+        cSecurityPolicyComboBox.getItems().add("AES256");
+        cSecurityPolicyComboBox.getItems().add("Basic128RSA15");
+        cSecurityPolicyComboBox.getItems().add("Basic256");
+        cSecurityPolicyComboBox.getItems().add("Basic256SHA256");
+
+        cMessageSecurityModeComboBox.getItems().add("None");
+        cMessageSecurityModeComboBox.getItems().add("Sign");
+        cMessageSecurityModeComboBox.getItems().add("Sign & Encrypt");
+
+
+
         System.out.println("initialize"); //debug
     }
 
@@ -77,15 +95,79 @@ public class MainController {
 
     @FXML
     public void connectButtonClicked(Event e){
+        //Initialise 1
         this.client = connectionManager.getClient();
-       /* client.setAddress(cAddressTextField.getText());
+
+        //Check if has connect, if connected then end connection
+        if(client.isConnected())
+            client.disconnect();
+
+        //Initialise 2
         connectionManager.defaultAppInitialize();
+
+        //Reverse Connect
+        if (cReverseConnectCheckBox.isSelected() == false) {
+            client.setAddress(cAddressTextField.getText());
+            client.setReverseAddress(null);
+        } else { //UNIMPLEMENTED
+            client.setAddress("");
+            //client.setReverseAddress();
+        }
+
+        //Security Policy
+        SecurityPolicy securityPolicy = SecurityPolicy.NONE;
+        MessageSecurityMode messageSecurityMode = MessageSecurityMode.None;
+        switch (cSecurityPolicyComboBox.getSelectionModel().getSelectedIndex()){
+            case 0:
+                securityPolicy = SecurityPolicy.NONE;
+                break;
+            case 1:
+                securityPolicy = SecurityPolicy.AES128_SHA256_RSAOAEP;
+                break;
+            case 2:
+                securityPolicy = SecurityPolicy.AES256_SHA256_RSAPSS;
+                break;
+            case 3:
+                securityPolicy = SecurityPolicy.BASIC128RSA15;
+                break;
+            case 4:
+                securityPolicy = SecurityPolicy.BASIC256;
+                break;
+            case 5:
+                securityPolicy = SecurityPolicy.BASIC256SHA256;
+                break;
+        }
+
+        switch (cMessageSecurityModeComboBox.getSelectionModel().getSelectedIndex()){
+            case 0:
+                messageSecurityMode = MessageSecurityMode.None;
+                break;
+            case 1:
+                messageSecurityMode = MessageSecurityMode.Sign;
+                break;
+            case 2:
+                messageSecurityMode = MessageSecurityMode.SignAndEncrypt;
+                break;
+        }
+        SecurityMode securityMode = new SecurityMode(securityPolicy, messageSecurityMode);
+        client.setSecurityMode(securityMode);
+
+
+        //Connect
         try {
             client.connect();
         } catch (ServiceException error) {
             System.out.println("Connection Failed"); //debug
             System.out.print(error);
-        }*/
+        }
+        //System.out.println(client.getSecurityMode()); //debug
+        System.out.println(client.getServerState()); //debug
+    }
+
+    @FXML
+    public void cCreateCertificateButtonClicked(Event e){
+
+        System.out.println("cCreateCertificateButtonClicked"); //debug
     }
 
 }
