@@ -10,12 +10,14 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import main.connector.ClientConnectionManager;
 
 public class MainController {
@@ -165,7 +167,12 @@ public class MainController {
     }
 
     @FXML
-    public void cCreateCertificateButtonClicked(Event e){
+    private void cCreateCertificateButtonClicked(Event e) throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CertificatePopUp.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+        stage.show();
 
         System.out.println("cCreateCertificateButtonClicked"); //debug
     }
